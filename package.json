@@ -1,0 +1,23 @@
+{
+  "name": "mx-sdk-js-bridge",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/multiversx/mx-sdk-js-bridge.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/multiversx/mx-sdk-js-bridge/issues"
+  },
+  "homepage": "https://github.com/multiversx/mx-sdk-js-bridge#readme",
+  "dependencies": {
+    "web3": "^4.5.0"
+  }
+}
