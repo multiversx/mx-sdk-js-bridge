@@ -1,11 +1,12 @@
 const Web3 = require('web3');
 
 /**
- * Encodes call data for the deposit function.
+ * Encodes call data for the deposit function with simplified argument handling.
+ * Automatically attempts to detect and encode integers and strings.
  *
  * @param {string} endpointName - The name of the endpoint for the cross-chain call.
  * @param {number} gasLimit - The gas limit for the cross-chain call.
- * @param {string[]} args - The arguments for the cross-chain call.
+ * @param {any[]} args - The arguments for the cross-chain call, assumed to be strings or numbers.
  * @returns {string} The encoded callData string.
  */
 function encodeCallData(endpointName, gasLimit, args) {
@@ -18,12 +19,19 @@ function encodeCallData(endpointName, gasLimit, args) {
     // Convert gasLimit to 8 bytes hex string
     const gasLimitHex = web3.utils.leftPad(web3.utils.numberToHex(gasLimit), 16);
 
-    // Encode arguments
+    // Encode arguments, automatically handling as strings or numbers
     let encodedArgs = '';
     args.forEach(arg => {
-        const argBytes = web3.utils.asciiToHex(arg);
-        const argLength = web3.utils.leftPad(web3.utils.numberToHex(argBytes.length / 2), 8); // 4 bytes length
-        encodedArgs += argLength.substr(2) + argBytes.substr(2); // Remove '0x' prefix
+        let argHex;
+        if (typeof arg === 'number' || (!isNaN(arg) && !isNaN(parseFloat(arg)))) {
+            // Treat as number
+            argHex = web3.utils.numberToHex(arg);
+        } else {
+            // Default to treating as string
+            argHex = web3.utils.asciiToHex(arg);
+        }
+        const argLength = web3.utils.leftPad(web3.utils.numberToHex(argHex.length / 2), 8); // 4 bytes length
+        encodedArgs += argLength.substr(2) + argHex.substr(2); // Remove '0x' prefix
     });
 
     // Number of arguments in 4 bytes hex string
@@ -39,5 +47,6 @@ function encodeCallData(endpointName, gasLimit, args) {
 
     return '0x' + callData;
 }
+
 
 module.exports = encodeCallData;
