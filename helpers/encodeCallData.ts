@@ -42,10 +42,12 @@ export function addArgs(callData: string, args: any[]): string {
         if (typeof arg === 'number' || (!isNaN(arg) && !isNaN(parseFloat(arg)))) {
             // Treat as number and convert to padded hex
             argHex = numberToPaddedHex(arg);
-        } else {
+        } else if (typeof arg === "string") {
             // Treat as string
             const argBuffer = Buffer.from(arg, 'utf8');
             argHex = argBuffer.toString('hex');
+        } else {
+            throw new Error(`Unsupported argument type: ${typeof arg}`);
         }
         argLengthHex = new BigNumber(argHex.length / 2).toString(16).padStart(uint32ArgBytes, '0');
         encodedArgs += argLengthHex + argHex;

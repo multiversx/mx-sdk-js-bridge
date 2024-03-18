@@ -29,7 +29,7 @@ describe('Encoding Functions', () => {
     });
 
     describe('addArgs Function', () => {
-        test('correctly encodes and adds the arguments\' lengths and values to the call data', () => {
+        test('Correctly encodes the arguments` lengths and values and adds them to the call data.', () => {
             let callData = addArgs("", args);
             expect(callData).toEqual(`${expectedNumArgumentsHex}${expectedFirstArgumentLengthHex}${expectedFirstArgumentValueHex}${expectedSecondArgumentLengthHex}${expectedSecondArgumentValueHex}`);
         });
