@@ -3,7 +3,7 @@ import { numberToPaddedHex } from "@multiversx/sdk-core/out/utils.codec";
 
 const uint32ArgBytes = 8
 const uint64ArgBytes = 16
-
+const DataPresentProtocolMarker = "0x01"
 /**
  * Encodes call data for the deposit function with simplified argument handling.
  * Automatically attempts to detect and encode integers and strings.
@@ -14,7 +14,7 @@ const uint64ArgBytes = 16
  * @returns {string} The encoded callData string.
  */
 export function encodeCallData(endpointName: string, gasLimit: number, args: any[]): string {
-    let callData = '0x01';
+    let callData = DataPresentProtocolMarker;
     callData = addEndpointName(callData, endpointName);
     callData = addGasLimit(callData, gasLimit);
     callData = addArgs(callData, args);
