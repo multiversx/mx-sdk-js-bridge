@@ -1,0 +1,1 @@
+export { encodeCallData } from './encodeCallData';
