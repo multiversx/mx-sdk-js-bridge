@@ -1,5 +1,1 @@
-import { encodeCallData } from './encodeCallData';
-
-module.exports = {
-    encodeCallData,
-};
+export { encodeCallData } from './encodeCallData';

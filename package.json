@@ -1,6 +1,6 @@
 {
   "name": "mx-sdk-js-bridge",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "SDK library to interact with the bridges on MultiversX blockchain",
   "main": "index.ts",
   "scripts": {

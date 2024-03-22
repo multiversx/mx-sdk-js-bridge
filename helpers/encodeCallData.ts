@@ -54,11 +54,3 @@ export function addArgs(callData: string, args: any[]): string {
     });
     return callData + numArgsHex + encodedArgs;
 }
-
-
-module.exports = {
-    encodeCallData,
-    addEndpointName,
-    addGasLimit,
-    addArgs
-};
