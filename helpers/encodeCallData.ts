@@ -1,5 +1,5 @@
 import BigNumber from "bignumber.js";
-import { numberToPaddedHex } from "@multiversx/sdk-core/out/utils.codec";
+import { numberToPaddedHex } from "./utils.codec";
 
 const uint32ArgBytes = 8
 const uint64ArgBytes = 16
