@@ -14,7 +14,7 @@ export const ArgumentsPresentProtocolMarker = "01"
  * @returns {string} The encoded callData string.
  */
 export function encodeCallData(endpointName: string, gasLimit: number, args: any[]): string {
-    let callData = '0x';
+    let callData = '';
     callData = addEndpointName(callData, endpointName);
     callData = addGasLimit(callData, gasLimit);
     callData = addArgs(callData, args);
