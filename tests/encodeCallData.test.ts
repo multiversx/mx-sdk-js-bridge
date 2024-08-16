@@ -3,7 +3,8 @@ import {
     addEndpointName,
     addGasLimit,
     addArgs,
-    ArgumentsPresentProtocolMarker,
+    ArgumentsPresentProtocolMarkerHex,
+    ArgumentsMissingProtocolMarkerHex,
 } from '../helpers/encodeCallData';
 import BigNumber from "bignumber.js";
 describe('Encoding Functions', () => {
@@ -46,14 +47,21 @@ describe('Encoding Functions', () => {
         test('works with BigNumber', () => {
             const args = [BigNumber(42), 'hello'];
             let callData = addArgs("", args);
-            expect(callData).toEqual(`${ArgumentsPresentProtocolMarker}${expectedNumArgumentsHex}${expectedFirstArgumentLengthHex}${expectedFirstArgumentValueHex}${expectedSecondArgumentLengthHex}${expectedSecondArgumentValueHex}`);
+            expect(callData).toEqual(`${ArgumentsPresentProtocolMarkerHex}${expectedNumArgumentsHex}${expectedFirstArgumentLengthHex}${expectedFirstArgumentValueHex}${expectedSecondArgumentLengthHex}${expectedSecondArgumentValueHex}`);
+        });
+    });
+
+    describe('addArgs Function', () => {
+        test('works with no arguments', () => {
+            let callData = addArgs("", []);
+            expect(callData).toEqual(`${ArgumentsMissingProtocolMarkerHex}`);
         });
     });
 
     describe('encodeCallData Function', () => {
         test('correctly concatenates the encoded endpoint name, gas limit, and arguments into a single hex string', () => {
             const result = encodeCallData(endpointName, gasLimit, args);
-            const expected = `0x${expectedLengthHex}${expectedNameHex}${expectedGasLimitHex}${ArgumentsPresentProtocolMarker}${expectedNumArgumentsHex}${expectedFirstArgumentLengthHex}${expectedFirstArgumentValueHex}${expectedSecondArgumentLengthHex}${expectedSecondArgumentValueHex}`;
+            const expected = `0x${expectedLengthHex}${expectedNameHex}${expectedGasLimitHex}${ArgumentsPresentProtocolMarkerHex}${expectedNumArgumentsHex}${expectedFirstArgumentLengthHex}${expectedFirstArgumentValueHex}${expectedSecondArgumentLengthHex}${expectedSecondArgumentValueHex}`;
             expect(result).toEqual(expected);
         });
     });

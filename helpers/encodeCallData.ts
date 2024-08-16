@@ -3,7 +3,8 @@ import { numberToPaddedHex } from "./utils.codec";
 
 const uint32ArgBytes = 8
 const uint64ArgBytes = 16
-export const ArgumentsPresentProtocolMarker = "01"
+export const ArgumentsMissingProtocolMarkerHex = "00"
+export const ArgumentsPresentProtocolMarkerHex = "01"
 /**
  * Encodes call data for the deposit function with simplified argument handling.
  * Automatically attempts to detect and encode integers and strings.
@@ -36,7 +37,7 @@ export function addGasLimit(callData: string, gasLimit: number): string {
 
 export function addArgs(callData: string, args: any[]): string {
     if (args.length == 0) {
-        return '00'
+        return ArgumentsMissingProtocolMarkerHex;
     }
     let encodedArgs = '';
     const numArgsHex = new BigNumber(args.length).toString(16).padStart(uint32ArgBytes, '0');
@@ -55,5 +56,5 @@ export function addArgs(callData: string, args: any[]): string {
         argLengthHex = new BigNumber(argHex.length / 2).toString(16).padStart(uint32ArgBytes, '0');
         encodedArgs += argLengthHex + argHex;
     });
-    return callData + ArgumentsPresentProtocolMarker + numArgsHex + encodedArgs;
+    return callData + ArgumentsPresentProtocolMarkerHex + numArgsHex + encodedArgs;
 }
