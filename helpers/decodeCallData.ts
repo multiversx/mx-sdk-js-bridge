@@ -2,7 +2,8 @@ import BigNumber from "bignumber.js";
 
 const uint32ArgBytes = 8
 const uint64ArgBytes = 16
-const ArgumentsPresentProtocolMarkerHex = '01'
+const ArgumentsMissingProtocolMarkerHex = "00"
+const ArgumentsPresentProtocolMarkerHex = "01"
 
 /**
  * Decodes call data into the endpoint name, gas limit, and arguments.
@@ -53,6 +54,13 @@ export function decodeCallData(
     const protocolMarker = callData.slice(offset, offset + 2);
     offset += 2;
 
+    if ([
+      ArgumentsPresentProtocolMarkerHex,
+      ArgumentsMissingProtocolMarkerHex
+    ].indexOf(protocolMarker) === -1) {
+      throw new Error('Invalid protocol marker');
+    }
+
     let args: string[] = [];
     if (protocolMarker === ArgumentsPresentProtocolMarkerHex) {
       if (callData.length < offset + uint32ArgBytes) {
@@ -79,6 +87,7 @@ export function decodeCallData(
         args.push(argHex);
       }
     }
+
 
     return { endpointName, gasLimit, args };
   } catch (error) {
